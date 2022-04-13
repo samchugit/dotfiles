@@ -1,0 +1,13 @@
+[init]
+	defaultBranch = main
+[user]
+	email = {{ .email }}
+	name = {{ .name }}
+	signingkey = {{ .signingkey }}
+[merge]
+	ff = no
+[credential]
+	helper = manager-core
+	credentialStore = secretservice
+[commit]
+	gpgsign = true

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+TERMINAL=kitty
+BROWSER=microsoft-edge-stable
+
+
+if [ "$1" == "browser" ]; then
+    $BROWSER
+elif [ "$1" == "terminal" ]; then
+    $TERMINAL
+elif [ "$1" == "finder" ]; then
+    if [ "$2" == "gui" ]; then
+        dolphin
+    elif [ "$2" == "tui" ]; then
+        $TERMINAL ranger
+    fi
+elif [ "$1" == "locker" ]; then
+    dm-tool lock
+fi

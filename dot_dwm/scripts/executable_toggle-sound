@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CURRENT_PROFILE=$(pacmd list-cards | grep "active profile" | cut -d ' ' -f 3-)
+
+if [ "$CURRENT_PROFILE" = "<output:hdmi-stereo-extra1+input:analog-stereo>" ] ; then
+    notify-send -u low "Sound" "analog stereo output"
+    pacmd set-card-profile 0 "output:analog-stereo+input:analog-stereo"
+else
+    notify-send -u low  "Sound" "HDMI stereo ouput"
+    pacmd set-card-profile 0 "output:hdmi-stereo-extra1+input:analog-stereo"
+fi

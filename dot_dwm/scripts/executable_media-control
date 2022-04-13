@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$1" == "PlayPause" ]; then
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+elif [ "$1" == "Next" ]; then
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+elif [ "$1" == "Previous" ]; then
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+elif [ "$1" == "VolumeMute" ]; then
+    amixer set Master toggle
+elif [ "$1" == "VolumeUp" ]; then
+    amixer set Master 5%+ umute
+elif [ "$1" == "VolumeDown" ]; then
+    amixer set Master 5%- umute
+fi

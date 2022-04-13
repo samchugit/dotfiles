@@ -1,0 +1,105 @@
+" map leader and local leader
+let mapleader = ' '
+let g:mapleader = ' '
+let maplocalleader = ';'
+let g:maplocalleader = ';'
+
+" auto load vimrc
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" resume last cursor position
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" quit all for last editable window
+autocmd BufEnter * if 0 == len(filter(range(1, winnr('$')), 'empty(getbufvar(winbufnr(v:val), "&bt"))')) | qa! | endif
+
+" ---------------
+" Indent Settings
+" ---------------
+set expandtab
+set smarttab
+set autoindent
+set smartindent
+set shiftround
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+
+" ----------------
+" Display Settings
+" ----------------
+set number
+set relativenumber
+set nowrap
+set showmatch
+set hidden
+set matchtime=2
+set scrolloff=10
+set shortmess+=c
+
+
+" ---------------
+" Search Settings
+" ---------------
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+
+" -----------------
+" Filetype Settings
+" -----------------
+filetype on
+filetype plugin on
+filetype indent on
+
+
+" ----
+" MISC
+" ----
+syntax on
+set nocompatible
+set autoread
+set mouse=a
+set magic
+set title
+set updatetime=300
+set timeoutlen=500
+set spelllang=en_us,cjk
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+
+" ------------
+" Key Maps
+" ------------
+" disable default 's' key
+map s <nop>
+map S <nop>
+
+" basic operations
+map <silent><leader>w :<C-u>w<CR>
+map <silent><leader>W :<C-u>wa<CR>
+map <silent><leader>q :<C-u>q<CR>
+map <silent><leader>Q :<C-u>qa!<CR>
+map <silent><leader>WQ :<C-u>wa<CR>:<C-u>qa<CR>
+map U <C-r>
+
+" cursor move in normal/visual/operator mode
+map <C-a> <home>
+map <C-e> <end>
+map j gj
+map k gk
+map J 5gj
+map K 5gk
+map W 5w
+map B 5b
+
+" cursor move in insert/command mode
+map! <C-h> <left>
+map! <C-j> <down>
+map! <C-k> <up>
+map! <C-l> <right>
+map! <C-a> <home>
+map! <C-e> <end>
+

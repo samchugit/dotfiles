@@ -1,0 +1,31 @@
+# -------
+# Modules
+# -------
+
+# Sets sane Zsh built-in environment options.
+zmodule environment
+zmodule git
+zmodule git-info
+# Applies correct bindkeys for input events.
+zmodule input
+# Sets a custom terminal title.
+zmodule termtitle
+# Utility aliases and functions. Adds colour to ls, grep and less.
+zmodule utility
+zmodule pacman
+zmodule archive
+zmodule steeef
+
+zmodule Aloxaf/fzf-tab
+zmodule zsh-users/zsh-completions
+zmodule completion
+zmodule zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
+
+#zmodule makeitjoe/incr.zsh -n incr
+#zmodule jeffreytse/zsh-vi-mode
+zmodule le0me55i/zsh-systemd -n systemd
+zmodule esc/conda-zsh-completion
+
+zmodule romkatv/powerlevel10k

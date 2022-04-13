@@ -1,0 +1,147 @@
+conky.config = {
+
+	--Various settings
+
+	background = true, 							-- forked to background
+	cpu_avg_samples = 2,						-- The number of samples to average for CPU monitoring.
+	diskio_avg_samples = 10,					-- The number of samples to average for disk I/O monitoring.
+	double_buffer = true,						-- Use the Xdbe extension? (eliminates flicker)
+	if_up_strictness = 'address',				-- how strict if testing interface is up - up, link or address
+	net_avg_samples = 2,						-- The number of samples to average for net data
+	no_buffers = true,							-- Subtract (file system) buffers from used memory?
+	temperature_unit = 'celsius',				-- fahrenheit or celsius
+	text_buffer_size = 2048,					-- size of buffer for display of content of large variables - default 256
+	update_interval = 1,						-- update interval
+	imlib_cache_size = 0,                       -- disable image cache to get a new spotify cover per song
+
+
+	--Placement
+
+	alignment = 'middle_right',					-- top-left,top-middle,top-right,bottom-left,bottom-middle,bottom-right,
+												-- middle-left,middle-middle,middle-right,none
+	--Arch Duoscreen
+	--gap_x = -1910,
+	gap_x = 10,									-- pixels between right or left border
+	gap_y = 10,									-- pixels between bottom or left border
+	minimum_height = 200,						-- minimum height of window
+	minimum_width = 280,						-- minimum height of window
+	maximum_width = 280,						-- maximum height of window
+
+	--Graphical
+
+	border_inner_margin = 5, 					-- margin between border and text
+	border_outer_margin = 5, 					-- margin between border and edge of window
+	border_width = 0, 							-- border width in pixels
+	default_bar_width = 280,					-- default is 0 - full width
+	default_bar_height = 5,					-- default is 6
+	default_gauge_height = 25,					-- default is 25
+	default_gauge_width =40,					-- default is 40
+	default_graph_height = 25,					-- default is 25
+	default_graph_width = 153,					-- default is 0 - full width
+	default_shade_color = '#000000',			-- default shading colour
+	default_outline_color = '#000000',			-- default outline colour
+	draw_borders = false,						-- draw borders around text
+	draw_graph_borders = true,					-- draw borders around graphs
+	draw_shades = false,						-- draw shades
+	draw_outline = false,						-- draw outline
+	stippled_borders = 0,						-- dashing the border
+
+	--Textual
+
+	extra_newline = false,						-- extra newline at the end - for asesome's wiboxes
+	format_human_readable = true,				-- KiB, MiB rather then number of bytes
+	font = 'Noto Mono:size=8:regular',  			-- font for complete conky unless in code defined
+	max_text_width = 0,							-- 0 will make sure line does not get broken if width too smal
+	max_user_text = 16384,						-- max text in conky default 16384
+	override_utf8_locale = true,				-- force UTF8 requires xft
+	short_units = true,							-- shorten units from KiB to k
+	top_name_width = 21,						-- width for $top name value default 15
+	top_name_verbose = false,					-- If true, top name shows the full command line of  each  process - Default value is false.
+	uppercase = false,							-- uppercase or not
+	use_spacer = 'none',						-- adds spaces around certain objects to align - default none
+	use_xft = true,								-- xft font - anti-aliased font
+	xftalpha = 1,								-- alpha of the xft font - between 0-1
+
+	--Windows
+
+	own_window = true,							-- create your own window to draw
+	own_window_argb_value = 150,				    -- real transparency - composite manager required 0-255
+	own_window_argb_visual = true,				-- use ARGB - composite manager required
+	own_window_class = 'Conky',					-- manually set the WM_CLASS name for use with xprop
+	own_window_colour = '#151515',				-- set colour if own_window_transparent no
+	own_window_hints = 'undecorated,below,above,sticky,skip_taskbar,skip_pager',  -- if own_window true - just hints - own_window_type sets it
+	own_window_transparent = false,				-- if own_window_argb_visual is true sets background opacity 0%
+	own_window_title = 'system_conky',			-- set the name manually  - default conky "hostname"
+	own_window_type = 'override',				-- if own_window true options are: normal/override/dock/desktop/panel
+
+
+	--Colours
+
+	default_color = '#ff0000',  				-- default color and border color
+	color1 = '#FFFFFF',
+	color2 = '#7aa2e2',
+	color3 = '#cccccc',
+	color4 = '#BDBDBD',
+	color5 = '#CCCCCC',
+	color6 = '#aa0000',
+
+	--Signal Colours
+	color7 = '#1F7411',  						--green
+	color8 = '#FFA726',  						--orange
+	color9 = '#F1544B',  						--firebrick
+
+	color0 = '#555555',
+
+
+	--Lua
+};
+
+lan = 'wlp0s20f3'
+
+conky.text = [[
+${color1}${hr}${color}
+${color1}${alignc}S Y S T E M    I N F O${color}
+${color1}${hr}${color}
+${color1}Host:${alignr}${color2}${nodename}${color}
+${color1}Kernel:${color2}${alignr}$kernel${color}
+${color1}Uptime:${color2}${alignr}${uptime}${color}
+${color1}IP:${color2}${alignr}${addr wlp0s20f3}${color}
+${color1}${goto 60}Avg${alignr}Freq${color}
+${color1}CPU${goto 60}${color2}${if_match ${cpu cpu0} < 60}${cpu cpu0}\
+${else}${if_match ${cpu cpu0} < 80}${color8}${cpu cpu0}\
+${else}${color9}${cpu cpu0}${endif}${endif}%${alignr}${freq_g}GHz${color}
+${color1}${goto 60}Used${alignr}Free${color}
+${color1}SSD${goto 60}${color2}${fs_used /} / ${fs_size /}${alignr}${fs_free /}[${fs_free_perc}%]${color}
+${color1}${goto 60}Up${alignr}Down${color}
+${color1}NET${goto 60}${color2}${upspeed wlp0s20f3}${alignr}${downspeed wlp0s20f3}${color}
+${color1}${goto 60}${color2}${upspeedgraph wlp0s20f3 30,110}${alignr}${downspeedgraph wlp0s20f3 30,110}${color}
+${color1}RAM${goto 60}${color2}${mem} / ${memmax}${alignr}${if_match ${memperc} < 60}${memperc}\
+${else}${if_match ${memperc} < 90}${color8}${memperc}\
+${else}${color9}${memperc}${endif}${endif}%${color}
+${color2}${membar}${color}
+${color1}Swap${goto 60}${color2}${swap} / ${swapmax}${alignr}${if_match ${swapperc} < 60}${swapperc}\
+${else}${if_match ${swapperc} < 90}${color8}${swapperc}\
+${else}${color9}${swapperc}${endif}${endif}%${color}
+${color2}${swapbar}${color}
+${color1}${hr}${color}
+${color1}${alignc}S H O R T C U T    K E Y S${color}
+${color1}${hr}${color}
+${color1}[Meta]+[Space]${alignr}${color2}Launcher${color}
+${color1}[Meta]+P${alignr}${color2}dmenu${color}
+${color1}[Meta]+X${alignr}${color2}Power Menu${color}
+
+${color1}[Meta]+[Alt]+1..4${alignr}${color2}Change Layout${color}
+${color1}[Meta]+[Shift]+[Space]${alignr}${color2}Toggle Float${color}
+${color1}[Meta]+[Enter]${alignr}${color2}Terminal${color}
+${color1}[Meta]+E${alignr}${color2}GUI File Manager${color}
+${color1}[Meta]+F${alignr}${color2}TUI File Manager${color}
+${color1}[Meta]+B${alignr}${color2}Browser${color}
+${color1}[Meta]+S${alignr}${color2}Screen Shot${color}
+${color1}[Meta]+[Alt]+L${alignr}${color2}Lock${color}
+${color1}[Meta]+M${alignr}${color2}Toggle Display${color}
+${color1}[Meta]+N${alignr}${color2}Toggle Sound Output${color}
+${color1}[Meta]+[Shift]+B${alignr}${color2}Toggle Bar${color}
+
+${color1}[Meta]+Q${alignr}${color2}Stop Application${color}
+${color1}[Meta]+[Shift]+Q${alignr}${color2}Exit dwm${color}
+]];
