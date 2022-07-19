@@ -141,6 +141,17 @@ imap <C-c> <C-g>u<esc>[s1z=`]a<C-g>u
 " -------
 " Plugins
 " -------
+" install vim-plug if it's not installed
+" this works only for neovim, see https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+let plug_path = stdpath('data') . '/site/autoload/plug.vim'
+if empty(glob(plug_path))
+    silent execute '!curl -fL --create-dirs -o '.plug_path.
+                \ ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute 'source '.plug_path
+endif
+unlet plug_path
+
+" plug plugins
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-startify'
@@ -165,13 +176,18 @@ Plug 'lilydjwg/fcitx.vim', { 'branch': 'fcitx5' }
 Plug 'wakatime/vim-wakatime'
 call plug#end()
 
+" run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
 
 " ---------------
 " Plugin Settings
 " ---------------
 " +gruvbox
 "let g:gruvbox_contrast_dark = 'hard'
-autocmd vimenter * ++nested colorscheme gruvbox
+autocmd VimEnter * ++nested colorscheme gruvbox
 
 
 " +vim-startify
