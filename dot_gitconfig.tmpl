@@ -1,9 +1,9 @@
 [init]
 	defaultBranch = main
 [user]
-	email = {{ .email }}
-	name = {{ .name }}
-	signingkey = {{ .signingkey }}
+	email = {{ .email | quote }}
+	name = {{ .name | quote }}
+	signingkey = {{ .signingkey | quote}}
 [merge]
 	ff = no
 [credential]
