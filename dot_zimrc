@@ -14,7 +14,6 @@ zmodule termtitle
 zmodule utility
 zmodule pacman
 zmodule archive
-zmodule steeef
 
 zmodule Aloxaf/fzf-tab
 zmodule zsh-users/zsh-completions
