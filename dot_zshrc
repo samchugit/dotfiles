@@ -1,9 +1,10 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+ZIM_HOME=~/.zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
+
 
 # Start configuration added by Zim install {{{
 #
@@ -94,13 +95,6 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 #typeset -A ZSH_HIGHLIGHT_STYLES
 #ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
-#
-# fzf-tab
-#
-zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath' # remember to use single quote here!!!
-zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
-
 
 # ------------------
 # Initialize modules
@@ -144,6 +138,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 export TERM="xterm-256color" # getting proper colors
 export VISUAL="nvim"
 export EDITOR="$VISUAL"
+export GPG_TTY=$(tty)
 export HISTORY_IGNORE="(ls|rg|cd|pwd|exit|sudo reboot|history|cd -|cd ..|htop|top)"
 
 export PATH=~/.emacs.d/bin:$PATH # doom emacs exec binary
@@ -209,11 +204,8 @@ zstyle ':completion::complete:*' use-cache 1
 zstyle ":conda_zsh_completion:*" use-groups true
 zstyle ":conda_zsh_completion:*" sort-envs-by-time true
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # autojump settings
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 
-# thefuck settings
-eval $(thefuck --alias)
+# starship init
+eval $(starship init zsh)

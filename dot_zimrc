@@ -23,9 +23,6 @@ zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-history-substring-search
 
-#zmodule makeitjoe/incr.zsh -n incr
-#zmodule jeffreytse/zsh-vi-mode
 zmodule le0me55i/zsh-systemd -n systemd
 zmodule esc/conda-zsh-completion
 
-zmodule romkatv/powerlevel10k
