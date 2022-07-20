@@ -8,36 +8,37 @@
 # templateable values. The resulting file is then created at
 # `~/.config/chezmoi/chezmoi.toml`
 
-{{- $name           := "" -}}
-{{- $email          := "" -}}
-{{- $signingkey     := "" -}}
-{{- $encryptionkey  := "" -}}
+{{- $name           := "" }}
+{{- $email          := "" }}
+{{- $signingkey     := "" }}
+{{- $encryptionkey  := "" }}
 
-{{- if stdinIsATTY -}}
-{{-   if hasKey . "name" -}}
-{{-     $name = .name -}}
-{{-   else -}}
-{{-     $name = promptString "name" -}}
-{{-   end -}}
-{{-   if hasKey . "email" -}}
-{{-     $email = .email -}}
-{{-   else -}}
-{{-     $email = promptString "email" -}}
-{{-   end -}}
-{{-   if hasKey . "signingkey" -}}
-{{-     $signingkey = .signingkey -}}
-{{-   else -}}
-{{-     $signingkey = promptString "signing key" -}}
-{{-   end -}}
-{{-   if hasKey . "encryptionkey" -}}
-{{-     $encryptionkey = .encryptionkey -}}
-{{-   else -}}
-{{-     $encryptionkey = promptString "encryption key" -}}
-{{-   end -}}
-{{- else -}}
-{{-   writeToStdout (printf "You should manually edit config file in '%d'!\n" .chezmoi.configFile) -}}
-{{- end -}}
+{{- if stdinIsATTY }}
+{{-   if hasKey . "name" }}
+{{-     $name = .name }}
+{{-   else }}
+{{-     $name = promptString "name" }}
+{{-   end }}
+{{-   if hasKey . "email" }}
+{{-     $email = .email }}
+{{-   else }}
+{{-     $email = promptString "email" }}
+{{-   end }}
+{{-   if hasKey . "signingkey" }}
+{{-     $signingkey = .signingkey }}
+{{-   else }}
+{{-     $signingkey = promptString "signing key" }}
+{{-   end }}
+{{-   if hasKey . "encryptionkey" }}
+{{-     $encryptionkey = .encryptionkey }}
+{{-   else }}
+{{-     $encryptionkey = promptString "encryption key" }}
+{{-   end }}
+{{- else }}
+{{-   writeToStdout (printf "You should manually edit config file in '%d'!\n" .chezmoi.configFile) }}
+{{- end }}
 
+verbose = true
 encryption = "gpg"
 [gpg]
     recipient = {{ $encryptionkey | quote }}
