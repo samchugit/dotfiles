@@ -8,33 +8,34 @@
 # templateable values. The resulting file is then created at
 # `~/.config/chezmoi/chezmoi.toml`
 
+{{- $name           := "" -}}
+{{- $email          := "" -}}
+{{- $signingkey     := "" -}}
+{{- $encryptionkey  := "" -}}
+
 {{- if stdinIsATTY -}}
 {{-   if hasKey . "name" -}}
-{{-     $name := .name -}}
+{{-     $name = .name -}}
 {{-   else -}}
-{{-     $name := promptString "name" -}}
+{{-     $name = promptString "name" -}}
 {{-   end -}}
 {{-   if hasKey . "email" -}}
-{{-     $email := .email -}}
+{{-     $email = .email -}}
 {{-   else -}}
-{{-     $email := promptString "email" -}}
+{{-     $email = promptString "email" -}}
 {{-   end -}}
 {{-   if hasKey . "signingkey" -}}
-{{-     $signingkey := .signingkey -}}
+{{-     $signingkey = .signingkey -}}
 {{-   else -}}
-{{-     $signingkey := promptString "signing key" -}}
+{{-     $signingkey = promptString "signing key" -}}
 {{-   end -}}
 {{-   if hasKey . "encryptionkey" -}}
-{{-     $encryptionkey := .encryptionkey -}}
+{{-     $encryptionkey = .encryptionkey -}}
 {{-   else -}}
-{{-     $encryptionkey := promptString "encryption key" -}}
+{{-     $encryptionkey = promptString "encryption key" -}}
 {{-   end -}}
 {{- else -}}
-{{-   writeToStdout "You should manually edit config file in " + .chezmoi.configFile + "\n" -}}
-{{-   $name             := "" -}}
-{{-   $email            := "" -}}
-{{-   $signingkey       := "" -}}
-{{-   $encryptionkey    := "" -}}
+{{-   writeToStdout (printf "You should manually edit config file in '%d'!\n" .chezmoi.configFile) -}}
 {{- end -}}
 
 encryption = "gpg"
@@ -48,3 +49,4 @@ encryption = "gpg"
     email = {{ $email | quote }}
     name = {{ $name | quote }}
     signingkey = {{ $signingkey | quote }}
+    encryptionkey = {{ $encryptionkey | quote }}
