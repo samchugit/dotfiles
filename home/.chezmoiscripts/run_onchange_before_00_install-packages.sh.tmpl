@@ -1,0 +1,50 @@
+#!/bin/bash
+# -*-mode:sh-*- vim:ft=sh
+
+# ~/.local/share/chezmoi/home/.chezmoiscripts/run_onchange_before_00_install-packages.sh.tmpl
+# =============================================================================
+# Used to install essential packages on the system.
+# This script runs if it's been modified before updating the destination while
+# executing `chezmoi apply`
+
+{{- if eq .chezmoi.os "linux" }}
+
+packages=(
+    curl
+    git
+    vim
+    neovim
+    zsh
+    clang
+    fzf
+    nodejs # for coc.nvim
+    npm    # for coc.nvim
+    xclip  # for neovim clipboard
+{{- if eq .chezmoi.osRelease.id "arch" "manjaro" "manjaro-arm" }}
+    starship # only in Arch-liked distro's repo
+{{- end }}
+)
+
+{{/* for a Debian-liked distro */}}
+{{- if eq .chezmoi.osRelease.id "ubuntu" "debian" }}
+echo "Debian-based distro detected."
+sudo apt update
+for package in "${packages[@]}"; do
+    (dpkg -l "$package" &> /dev/null \
+        && printf "  - %-10s is already installed, skip it\n" $package) \
+        || sudo apt install -y "$package"
+done
+{{- end }}
+
+{{/* for a Arch-liked distro */}}
+{{- if eq .chezmoi.osRelease.id "arch" "manjaro" "manjaro-arm" }}
+echo "Arch-based distro detected."
+sudo pacman -Syy
+for package in "${packages[@]}"; do
+    (pacman -Qs $package &> /dev/null \
+        && printf "  - %-10s is already installed, skip it\n" $package) \
+        || sudo pacman -S --noconfirm "$package"
+done
+{{- end }}
+
+{{- end }}
