@@ -1,1 +1,7 @@
+# -*-mode:gitignore-*- vim:ft=gitignore
+
+# ~/.local/share/chezmoi/.chezmoiignore
+# =============================================================================
+# Used to ignore files when applying to target directory.
+
 README.md
