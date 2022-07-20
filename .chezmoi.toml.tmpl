@@ -1,0 +1,50 @@
+# -*-mode:conf-toml-*- vim:ft=toml
+
+# ~/.local/share/chezmoi/.chezmoi.toml.tmpl
+# =============================================================================
+# Used to customize configuration when doing a `chezmoi init`.
+#
+# This template file will trigger prompts to fill-in machine-specific
+# templateable values. The resulting file is then created at
+# `~/.config/chezmoi/chezmoi.toml`
+
+{{- if stdinIsATTY -}}
+{{-   if hasKey . "name" -}}
+{{-     $name := .name -}}
+{{-   else -}}
+{{-     $name := promptString "name" -}}
+{{-   end -}}
+{{-   if hasKey . "email" -}}
+{{-     $email := .email -}}
+{{-   else -}}
+{{-     $email := promptString "email" -}}
+{{-   end -}}
+{{-   if hasKey . "signingkey" -}}
+{{-     $signingkey := .signingkey -}}
+{{-   else -}}
+{{-     $signingkey := promptString "signing key" -}}
+{{-   end -}}
+{{-   if hasKey . "encryptionkey" -}}
+{{-     $encryptionkey := .encryptionkey -}}
+{{-   else -}}
+{{-     $encryptionkey := promptString "encryption key" -}}
+{{-   end -}}
+{{- else -}}
+{{-   writeToStdout "You should manually edit config file in " + .chezmoi.configFile + "\n" -}}
+{{-   $name             := "" -}}
+{{-   $email            := "" -}}
+{{-   $signingkey       := "" -}}
+{{-   $encryptionkey    := "" -}}
+{{- end -}}
+
+encryption = "gpg"
+[gpg]
+    recipient = {{ $encryptionkey | quote }}
+    args = ["--quiet"]
+[diff]
+    exclude = ["scripts"]
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    signingkey = {{ $signingkey | quote }}
