@@ -5,3 +5,12 @@
 # Used to ignore files when applying to target directory.
 
 README.md
+
+{{- if not .is_tiling_wm }}
+.dwm
+.dwm/**
+.config/dunst
+.config/dunst/**
+.config/picom.conf
+.conkyrc
+{{- end }}

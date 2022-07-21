@@ -9,12 +9,18 @@
 # templateable values. The resulting file is then created at
 # `~/.config/chezmoi/chezmoi.toml`
 
+{{- $is_tiling_wm     := false }}
 {{- $name           := "" }}
 {{- $email          := "" }}
 {{- $signingkey     := "" }}
 {{- $encryptionkey  := "" }}
 
 {{- if stdinIsATTY }}
+{{-   if hasKey . "is_tiling_wm" }}
+{{-     $is_tiling_wm = promptBool "running on tiling WM (y/n)" .is_tiling_wm }}
+{{-   else }}
+{{-     $is_tiling_wm = promptBool "running on tiling WM (y/n)" }}
+{{-   end }}
 {{-   if hasKey . "name" }}
 {{-     $name = promptString "changing your name" .name }}
 {{-   else }}
@@ -48,6 +54,7 @@ encryption = "gpg"
     exclude = ["scripts"]
 
 [data]
+    is_tiling_wm = {{ $is_tiling_wm }}
     email = {{ $email | quote }}
     name = {{ $name | quote }}
     signingkey = {{ $signingkey | quote }}
