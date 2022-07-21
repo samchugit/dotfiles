@@ -2,7 +2,8 @@
 
 # ~/.local/share/chezmoi/home/.chezmoi.toml.tmpl
 # =============================================================================
-# Used to customize configuration when doing a `chezmoi init`.
+# Used to customize configuration when doing a `chezmoi init`. All template
+# data name will turn to lower case.
 #
 # This template file will trigger prompts to fill-in machine-specific
 # templateable values. The resulting file is then created at
@@ -15,24 +16,24 @@
 
 {{- if stdinIsATTY }}
 {{-   if hasKey . "name" }}
-{{-     $name = .name }}
+{{-     $name = promptString "changing your name" .name }}
 {{-   else }}
-{{-     $name = promptString "name" }}
+{{-     $name = promptString "your name" }}
 {{-   end }}
 {{-   if hasKey . "email" }}
-{{-     $email = .email }}
+{{-     $email = promptString "changing your email" .email }}
 {{-   else }}
-{{-     $email = promptString "email" }}
+{{-     $email = promptString "your email" }}
 {{-   end }}
 {{-   if hasKey . "signingkey" }}
-{{-     $signingkey = .signingkey }}
+{{-     $signingkey = promptString "changing your signing key" .signingkey }}
 {{-   else }}
-{{-     $signingkey = promptString "signing key" }}
+{{-     $signingkey = promptString "your signing key" }}
 {{-   end }}
 {{-   if hasKey . "encryptionkey" }}
-{{-     $encryptionkey = .encryptionkey }}
+{{-     $encryptionkey = promptString "changing your encryption key" .encryptionkey }}
 {{-   else }}
-{{-     $encryptionkey = promptString "encryption key" }}
+{{-     $encryptionkey = promptString "your encryption key" }}
 {{-   end }}
 {{- else }}
 {{-   writeToStdout (printf "You should manually edit config file in '%d'!\n" .chezmoi.configFile) }}
