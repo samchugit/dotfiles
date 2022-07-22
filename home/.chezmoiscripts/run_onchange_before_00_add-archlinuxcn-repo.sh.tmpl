@@ -1,0 +1,27 @@
+#!/bin/bash
+# -*-mode:sh-*- vim:ft=sh
+
+# ~/.local/share/chezmoi/home/.chezmoiscripts/run_onchange_before_00_add-archlinuxcn-repo.sh.tmpl
+# ==============================================================================
+# Used to add archlinuxcn repo to Arch-based distros.
+# This script runs if it's been modified before updating the destination while
+# executing `chezmoi apply`
+
+{{- if eq .chezmoi.os "linux" }}
+{{- if eq .chezmoi.osRelease.id "arch" "manjaro" "manjaro-arm" }}
+
+pacman_conf="/etc/pacman.conf"
+if [ "$(grep -c "archlinuxcn" "${pacman_conf}")" -eq 0 ]; then
+    printf "Adding 'archlinuxcn' repo to %s.\n" "${pacman_conf}"
+    (echo '
+[archlinuxcn]
+Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+' | sudo sh -c "cat >> "${pacman_conf}"") \
+    && sudo pacman -Sy --noconfirm archlinuxcn-keyring
+else
+    echo "'archlinuxcn' repo is already been added, skip it."
+fi
+
+{{- end }}
+{{- end }}
